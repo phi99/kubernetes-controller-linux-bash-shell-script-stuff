@@ -11,9 +11,6 @@ do
         then
             LOSS=$(echo $OUTPUT | cut -d ',' -f3)
             echo "$i no error"
- 
-
-            #echo $i is healthy
         else
             LOSS=$(echo $OUTPUT | cut -d ',' -f4)
             ERROR=$(echo $OUTPUT | cut -d ',' -f3)
