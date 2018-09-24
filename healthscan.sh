@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/ash
 
 #ping scan to multiple host listed in target file and analyze error and packet loss 
 
