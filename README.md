@@ -27,4 +27,6 @@ export CURL_CA_BUNDLE=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
 6) Specify the token (default token provided by Secret automatically) used to authenticate to the API server 
 TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
 7) Send the client request 
-curl -N -H "Authorization: Bearer $TOKEN" -s https://<API server IP address>/api/v1/namespaces/test-namespace/configmaps?watch=tru
+curl -N -H "Authorization: Bearer $TOKEN" -s https://<API server IP address>/api/v1/namespaces/<target namespace>/configmaps?watch=tru
+
+Note: fill the values for parameter with <> 
