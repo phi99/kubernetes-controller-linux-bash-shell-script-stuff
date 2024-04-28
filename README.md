@@ -7,13 +7,13 @@
 
 ```text
 Mechanism/Functionality
--------------------------------------------------
+------------------------
 The controller watches events from the api server targetting change in configmap. When there's a annotation change it would detect it and based on the content of the change, it would make a decision to restart certain pods. When the annotation in configmap is modified with words that match with the label of the pod, the controller would request the list of pods containing that label to the api server, and then send a delete request to delete those pods.
 ```
 
 ```text
 Implementation
----------------------------
+---------------
 1) Create service account
 kubectl create sa <sa name> -n test-namespace
 2) Create role (what actions are allowed)
