@@ -63,7 +63,7 @@ spec:
 export CURL_CA_BUNDLE=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
 TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
 
-6) Run the script
+6) Controller - shell script
 #!/bin/bash
 
 watch_event() {
