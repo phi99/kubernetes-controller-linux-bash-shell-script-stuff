@@ -1,7 +1,7 @@
 .***In Progress**
 
 	 	 	   ----------------------------------------------------------------
-	     	    	          **Kubernetes (k8s) Controller using shell script**
+	     	    	      ** Simple Kubernetes (k8s) Controller using shell script**
 	  	 	   ----------------------------------------------------------------
 
 
@@ -26,7 +26,6 @@ list-pods-sa1-binding-rust.yaml
 export CURL_CA_BUNDLE=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
 6) Specify the token (default token provided by Secret automatically) used to authenticate to the API server 
 TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
-7) Send the client request 
-curl -N -H "Authorization: Bearer $TOKEN" -s https://<API server IP address>/api/v1/namespaces/<target namespace>/configmaps?watch=tru
+7) Run the script
 
 Note: fill the values for parameter with <> 
