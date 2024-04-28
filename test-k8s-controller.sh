@@ -35,7 +35,7 @@ get_pods() {
   # Retrieve pods with target label
   local selector=${1}
   echo "selector:$selector"
-  pods=$(curl -N -H "Authorization: Bearer $TOKEN" -s https://10.96.0.1/api/v1/namespaces/test-namespace/pods?labelSelector=$selector | jq -r .items[].metadata.name)
+  pods=$(curl -N -H "Authorization: Bearer $TOKEN" -s https://<API server ip address>/api/v1/namespaces/<target namespace>/pods?labelSelector=$selector | jq -r .items[].metadata.name)
   echo $pods
   echo in "get_pods"
 }
@@ -44,7 +44,7 @@ delete_pods() {
   # Delete pods that matched
   for pod in $pods; do
     # Delete but also check exit code
-    exit_code=$(curl -N -H "Authorization: Bearer $TOKEN" -X DELETE -o /dev/null -w "%{http_code}" -s  https://10.96.0.1/api/v1/namespaces/test-namespace/pods/$pod)
+    exit_code=$(curl -N -H "Authorization: Bearer $TOKEN" -X DELETE -o /dev/null -w "%{http_code}" -s  https://<API server ip address>/api/v1/namespaces/<target namespace>/pods/$pod)
     echo "pod: $pod"
     echo "exit code: $exit_code"
     echo
