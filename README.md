@@ -6,7 +6,7 @@
 
 
 ```text
-Mechanism/Functionality
+Functionality/Mechanism
 ------------------------
 The controller watches events from the api server targetting change in configmap. When the annotation in configmap is modified with words that match with the label of the pod, the controller would request the list of pods containing that label to the api server, and then delete those pods.
 ```
