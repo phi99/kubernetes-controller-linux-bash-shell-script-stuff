@@ -16,16 +16,58 @@ Implementation
 ---------------------------
 1) Create service account
 kubectl create sa <sa name> -n test-namespace
-2) Create role (what action are allowed)
-role-list-pods.yaml
+2) Create role (what actions are allowed)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+        name: list-pods
+        namespace: test-namespace
+rules:
+        - apiGroups:
+                - ''
+          resources: [ "configmaps" ]
+          verbs: [ "get", "create", "update" ]
+          resources:
+                - "*"
+          verbs:
+                - "*"
 3) Bind the role to the created service account using role binding (who can perform the actions allowed in role (2))
-binding-list-pods-sa1.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+        name: binding-list-pods-sa1
+        namespace: test-namespace
+roleRef:
+        kind: Role
+        name: list-pods
+        apiGroup: rbac.authorization.k8s.io
+subjects:
+        - kind: ServiceAccount
+          name: sa1
+          namespace: test-namespace
+
+
 4) Create pod to use the created and binded service account
-list-pods-sa1-binding-rust.yaml 
-5) To enable client (curl for ex) to check if server cert is signed by the CA, specify the below environment variable so Curl can automatically include the cert of the CA in the request to check if the server's cert is signed by the CA.
+
+apiVersion: v1
+kind: Pod
+metadata:
+        name: sa1pod
+        namespace: test-namespace
+spec:
+        serviceAccountName: sa1
+        containers:
+                - name: testsa1container
+                  image: imagetestenv_new1
+                  imagePullPolicy: Never
+                  command:
+                          - "sleep"
+                          - "7200"
+
+5) Enable Curl to automatically include the cert of the CA in the request to check if the server's cert is signed by the CA, and token used to authenticate to API server.
 export CURL_CA_BUNDLE=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-6) Specify the token (default token provided by Secret automatically) used to authenticate to the API server 
 TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
-7) Run the script
+
+6) Run the script
 
 Note: fill the values for parameter with <> 
