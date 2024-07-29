@@ -1,7 +1,7 @@
 .***In Progress**
 
 	 	 	   ----------------------------------------------------------------
-	     	    	     ** Simple Kubernetes (k8s) Controller using shell script **
+	     	    	     ** Simple Kubernetes (K8s) Controller using shell script **
 	  	 	   ----------------------------------------------------------------
 
 
