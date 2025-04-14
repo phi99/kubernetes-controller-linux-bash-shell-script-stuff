@@ -1,4 +1,4 @@
-.***In Progress**
+***In Progress**
 
 	 	 	   ----------------------------------------------------------------
 	     	    	     ** Simple Kubernetes (K8s) Controller using shell script **
