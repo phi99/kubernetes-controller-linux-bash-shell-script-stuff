@@ -1,8 +1,8 @@
 ***In Progress**
 
-	 	 	   ----------------------------------------------------------------
-	     	    	     ** Simple Kubernetes (K8s) Controller using shell script **
-	  	 	   ----------------------------------------------------------------
+	 	 	             -----------------------------------------------------------------------
+	     	    	     ** Simple Kubernetes (K8s) Controller using  Linux/Bash shell script **
+	  	 	             -----------------------------------------------------------------------
 
 
 ```text
@@ -15,61 +15,19 @@ The controller watches events from the api server targetting change in configmap
 Implementation
 ---------------
 1) Create service account
-kubectl create sa <sa name> -n test-namespace
 2) Create role (what actions are allowed)
-apiVersion: 
-kind: Role
-metadata:
-        name: 
-        namespace: 
-rules:
-        - apiGroups:                - 
-          resources:               - 
-          verbs:
+
 3) Bind the role to the created service account using role binding (who can perform the actions allowed in role (2))
 apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-        name: 
-        namespace: 
-roleRef:
-        kind: Role
-        name: 
-        apiGroup: 
-subjects:
-        - kind: ServiceAccount
-          name: 
-          namespace: 
-
-
-4) Create pod to use the created and binded service account
-
-apiVersion: v1
-kind: Pod
-metadata:
-        name: 
-        namespace: 
-spec:
-        serviceAccountName: 
-        containers:
-                - name: 
-                  image: 
-                  imagePullPolicy: 
-                  command:
-                          - 
-                          - 
-
+4) Create pod to use the created and binded service account                     - 
 5) Define variables to enable Curl to automatically include the cert of the CA in the request to check if the server's cert is signed by the CA, and token used to authenticate to API server.
-export CURL_CA_BUNDLE=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
-
 6) Controller - shell script
 #!/bin/bash
 
 watch_event() {
   # Listening for event changes in config maps
   echo "::: Starting to wait for events"
-  curl -N -H "Authorization: Bearer $TOKEN" -s https://<API server ip address>/api/v1/namespaces/<target namespace>/configmaps?watch=true | while read -r event
+  curl -N -H "Authorization: | while read -r event
   do
     event=$(echo "$event" | tr '\r\n' ' ')
     echo "event: $event"
@@ -96,7 +54,7 @@ watch_event() {
 
 get_pods() {
   local selector=${1}
-  pods=$(curl -N -H "Authorization: Bearer $TOKEN" -s https://<API server ip address>/api/v1/namespaces/<target namespace>/pods?labelSelector=testdeleteselector=$selector | jq -r .items[].metadata.name)
+  pods=$(curl -N -H "Authorization:)
   echo $pods
 }
 
@@ -105,7 +63,7 @@ delete_pods() {
   echo "pods are: $pods"
   # Delete target pods and retrieve exit code
   for pod in $pods; do
-    exit_code=$(curl -N -H "Authorization: Bearer $TOKEN" -X DELETE -o /dev/null -w "%{http_code}" -s  https://<API server ip address>/api/v1/namespaces/test-namespace/pods/$pod)
+    exit_code=$(curl -N -H "Authorization:)
     echo
     if [ $exit_code -eq 200 ]; then
       echo "-- pod $pod is deleted ---"
